@@ -780,8 +780,14 @@ def get_model_feature_importance():
         return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == '__main__':
+    import os
+    
+    # Get port from environment variable (for web deployment) or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    debug_mode = os.environ.get('FLASK_ENV') != 'production'
+    
     print("Starting GREYMATTER Dashboard Backend...")
-    print("Dashboard available at: http://localhost:5000")
+    print(f"Dashboard available at: http://localhost:{port}")
     print("API endpoints:")
     print("  GET /api/influencers - Get all influencer data")
     print("  GET /api/statistics - Get summary statistics")
@@ -790,4 +796,4 @@ if __name__ == '__main__':
     print("  GET /api/roi-distribution - Get ROI distribution")
     print("  GET /api/backup-data - Create data backup")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
